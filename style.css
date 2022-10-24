@@ -1,0 +1,643 @@
+:root{
+    --mainColor: #f2efed;
+    --bgColor: #1c1b1d;
+    --accentColor: #deaf9d;
+    --highlightColor: #4e3e3e;
+    --errColor: #bf616a;
+    --altBgColor:#262223;
+
+    --b: #0077b6;
+    --r: #ff0000;
+
+    --mainFont: 'Inter', sans-serif;
+    --secondFont: 'Roboto Mono', monospace;
+}
+
+::selection{
+    background-color: var(--accentColor)
+}
+
+body{
+    background-color: var(--bgColor);
+    margin: 0px;
+    font-family: var(--mainFont);
+    overflow-y: hidden;
+    z-index: -1;
+}
+
+.header{
+    font-size: 56px;
+    font-family: var(--mainFont);
+    font-weight: 500;
+    color: var(--mainColor);
+    text-align: center;
+}
+
+.line{
+    border: none;
+    border-top: var(--accentColor) 1px solid; 
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+    width: 30vw;
+    margin-right:auto;
+    margin-left:auto;
+    opacity: 100%;
+}
+
+#initDivLine{
+    transform: none;
+}
+
+#initContainer{
+    height: 90vh;
+    width: 50vw;
+    margin: auto;
+    margin-top: 10vh;
+}
+
+#initFormContainer{
+    width: 100%;
+    height: 55vh;
+    opacity: 100%;
+    transition: 0.2s all;
+}
+
+.initFormContainer{
+    display: flex;
+    flex-direction: column;
+}
+
+.initForm{
+    width: calc(30vw - 1rem);
+    margin: auto;
+    margin-top: 0.5vh;
+    height: 4vh;
+
+    border-radius: 0.5rem;
+    background-color: var(--altBgColor);
+    border: 2px solid rgba(0, 0, 0, 0);
+    padding: 0.5rem;
+    outline: 0px;
+    
+    caret-color: var(--accentColor);
+
+    font-family: "Roboto Mono", monospace;
+    font-size: 16px;
+    color: var(--mainColor);
+
+    transition: all 0.2s;
+}
+
+.initForm:focus{
+    border: 2px var(--accentColor) solid;
+}
+
+.initLabel{
+    width: 30vw;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 0vh;
+    font-family: "Roboto Mono", monospace;
+    color: var(--accentColor);
+
+}
+
+#initBtn{
+    width: 30vw;
+    height: calc(5vh + 1rem);
+    border-radius: 0.5rem;
+    border: 2px var(--altBgColor) solid;
+    background-color: var(--altBgColor);
+    color: var(--mainColor);
+
+    margin: auto;
+    margin-top: 3vh;
+
+    font-size: 18px;
+    font-family: "Roboto Mono", monospace;
+    font-weight: 500;
+
+    transition: all 0.2s;
+}
+
+#initBtn:hover{
+    border: 2px var(--accentColor) solid;
+    background-color: var(--accentColor);
+    cursor: pointer;
+}
+
+#searchBtn{
+    width: 30vw;
+    height: calc(5vh + 1rem);
+    border-radius: 0.5rem;
+    border: 2px var(--altBgColor) solid;
+    background-color: var(--altBgColor);
+    color: var(--mainColor);
+
+    margin: auto;
+    margin-top: 3vh;
+
+    font-size: 18px;
+    font-family: "Roboto Mono", monospace;
+    font-weight: 500;
+
+    transition: all 0.2s;
+}
+#searchBtn:hover{
+    border: 2px var(--accentColor) solid;
+    background-color: var(--accentColor);
+    cursor: pointer;
+}
+
+#standbyContainer{
+    display:none;
+    flex-direction: column;
+    /* border-radius: 100%;
+    border: var(--mainColor) 2px solid; */
+
+    width: 70vh;
+    height: 50vh;
+
+    margin: auto;
+
+    align-items: center;
+    justify-content: center;
+
+    color: var(--accentColor);
+    font-size: 26px;
+    font-family: "Roboto Mono", monospace;
+}
+
+
+
+.hl-span{
+    background-color: var(--highlightColor);
+    color: var(--bgColor);
+    padding: 2px;
+}
+
+#standbyLabel{
+    font-size: 14px;
+    color: var(--highlightColor);
+}
+
+#fieldCanvas{
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+}
+
+#fieldCanvas:hover{
+    cursor: pointer;
+}
+
+.mainPage{
+    margin-top: 1.5vw;
+    margin-left: 1.5vw;
+    margin-right: 1.5vw;
+    width: calc(1.5vw*3 + 23vw*4);
+    height: 95vh;
+    display:none;
+
+
+    grid-template-columns: repeat(4, 23vw);
+    grid-template-rows: 19.5vh 19.5vh 19.5vh 19.5vh 5vh;
+
+    gap: 1.5vw;
+    
+    z-index: 1;
+}
+
+
+
+.mainPageBox{
+    border: solid var(--accentColor) 2px;
+    background-color: var(--altBgColor);
+    border-radius: 1rem;
+
+    display:flex;
+    font-family: "Roboto Mono", monospace;
+    font-size: 2em;
+    color: var(--mainColor);
+
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1;
+}
+
+#displayBar{
+    grid-column: 2 / 4;
+    grid-row: 5 / 5;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+    padding-left: 7.5vw;
+    padding-right: 7.5vw;
+    z-index: 1;
+}
+
+#display-match{
+    color: var(--mainColor);
+    font-family: "Roboto Mono", monospace;
+    font-size: 1rem;
+}
+
+#display-team{
+    color: var(--mainColor);
+    font-family: "Roboto Mono", monospace;
+    font-size: 1rem;
+}
+
+#display-timer{
+    color: var(--mainColor);
+    font-family: "Roboto Mono", monospace;
+    font-weight: 500;
+    font-size: 1.25rem;
+}
+
+.mainPageLabel{
+    color: var(--mainColor);
+    font-family: "Roboto Mono", monospace;
+    font-weight: 500;
+    font-size: 1.2rem;
+    z-index: 2;
+
+    display:flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    user-select: none;
+
+    margin-right: 1vw;
+    margin-bottom: 0.6vw;
+    z-index: 1;
+}
+
+.mainPageCounter{
+    color: var(--mainColor);
+    font-family: "Roboto Mono", monospace;
+    font-weight: 500;
+    font-size: 1.2rem;
+    z-index: 2;
+
+    display:flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    user-select: none;
+
+    margin-left: 1vw;
+    margin-bottom: 0.6vw;
+    z-index: 1;
+}
+
+#notifPage{
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--mainColor);
+
+    position: absolute;
+    top: 100vh;
+}
+
+.afterPageContainer{
+    width: 100vw;
+    height: 100vh;
+    margin: 0px;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.afterPageQata{
+    width: 40%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.cycContainer{
+    height: 10vh;
+    margin: 3vw;
+    width: 100%;
+}
+
+.qataLabel{
+    font-family: "Roboto mono", monospace;
+    font-size: 1.25rem;
+    color: var(--mainColor);
+    margin-bottom: 0.5vh;
+}
+
+.qataCycContainer{
+    margin-right: auto;
+    width: 70%;
+    height: 7vh;
+    
+    border-radius: 0.5rem;
+    background-color: var(--highlightColor);
+
+    display: flex;
+    justify-content: space-around;
+}
+
+.qataCyc{
+    font-family: "Roboto mono", monospace;
+    font-size: 1.25rem;
+    color: var(--mainColor);
+    border: 2px solid var(--highlightColor);
+    border-radius: 0.5rem;
+
+    width: 4vw;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: all 0.3s;
+
+}
+
+.qataCyc{
+    cursor: pointer;
+}
+
+.cycSelected{
+    border: var(--mainColor);
+    background-color: var(--accentColor);
+    color: var(--bgColor);
+
+    border-radius: 1rem;
+}
+
+.switchContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    width: 70%;
+    height: 7vh;
+
+    margin-left: 3vw;
+}
+
+.textContainer{
+    display: flex;
+    flex-direction: column;
+
+    width: 70%;
+    height: 13vh;
+
+    margin-left: 3vw;
+}
+
+.afterTextBox{
+    background-color: var(--highlightColor);
+    border: 2px solid var(--highlightColor);
+    height: 6vh;
+    border-radius: 0.5rem;
+    color:var(--mainColor);
+    font-size:1.25rem;
+    padding-left:10px;
+    transition: border 0.3s, background-color 0.5s, all 0.5s;
+    font-family: 'Roboto Mono', monospace;
+  }
+  .afterTextBox:focus{
+    outline:none;
+    border: 2px solid var(--accentColor);
+  }
+  .afterTextBox:hover{
+    transform: translateY(-0.15vh) translateX(-0.15vh);
+  }
+
+.afterPageEdit{
+    width: 30%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#mainTable{
+    border-collapse: collapse;
+    font-size: 1rem;
+    font-family: "Roboto Mono", monospace;
+    
+    width: 70%;
+    margin-top: calc(3vw + 1.5rem + 0.5vh);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+
+    color: var(--mainColor);
+    background-color: var(--altBgColor);
+    border-radius: 0.5rem;
+    height: 60vh;
+
+    transition: all 0.3;
+}
+
+.editTableRow{
+    margin: 1vh;
+    user-select: none;
+}
+.editTableRow:hover{
+    cursor:pointer;
+}
+
+.editSelect{
+    background-color: var(--highlightColor);
+    border-radius: 0.5rem;
+}
+
+.qataPageCellID{
+    padding: 1vh;
+}
+.qataPageCellNumber{
+    padding: 1vh;
+}
+#mainTable thead{
+    font-weight: 500;
+    font-size: 1.4rem;
+}
+
+.afterEditor{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-right: 20%;
+    width: 70%;
+    margin-top: 3vh;
+}
+
+.editBtn{
+    margin:auto;
+    border: 2px solid var(--bgColor);
+    color: var(--mainColor);
+    font-size: 1.25rem;
+    font-weight: 400;
+    font-family: "Roboto Mono", monospace;
+
+    border-radius: 100%;
+    padding: 4px;
+    height: 4vh;
+    width: 4vh;
+    text-align: center;
+    background-color: var(--highlightColor);
+    transition: border 0.3s, background-color 0.5s;
+
+}
+
+.editBtn:hover{
+    border: 2px solid var(--accentColor);
+    cursor: pointer;
+}
+
+#editTextBox{
+    background-color: var(--highlightColor);
+    border: 2px solid var(--highlightColor);
+    border-radius: 0.5rem;
+    color:var(--mainColor);
+    font-size:1.25rem;
+    padding-left:10px;
+    transition: border 0.3s, background-color 0.5s;
+    font-family: 'Roboto Mono', monospace;
+  }
+  #editTextBox:focus{
+    outline:none;
+    border: 2px solid var(--accentColor);
+  }
+
+  .afterPageQr{
+    display:flex;
+    flex-direction: column;
+
+    height: 50vh;
+    width: 20%;
+
+    margin-top: auto;
+    margin-bottom: auto;
+    
+  }
+
+  #qrContainer{
+    width: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 5vh;
+  }
+
+  #qrText{
+    font-size: 1rem;
+    color: var(--mainColor);
+    font-family: "Roboto Mono", monospace;
+
+    display:flex;
+    justify-content: center;
+
+    overflow-wrap: break-word;
+
+    overflow-y: scroll;
+
+    border: 2px solid var(--bgColor);
+    border-radius: 0.5rem;
+    background-color: var(--altBgColor);
+
+    padding: 2vh;
+    height: auto;
+
+    transition: 0.5s all;
+
+    word-break: break-all;
+  }
+
+  #qrText:hover{
+    cursor: pointer;
+    transform: translateY(-0.15vh) translateX(-0.15vh);
+  }
+
+  .qrTextfocus{
+    border: var(--accentColor);
+    background-color: var(--highlightColor);
+
+  }
+
+  #qrBtn{
+        
+    width: 100%;
+    height: 5vh;
+
+        border-radius: 0.5rem;
+        border: 2px var(--altBgColor) solid;
+        background-color: var(--altBgColor);
+        color: var(--mainColor);
+    
+        margin: auto;
+        margin-top: 3vh;
+    
+        font-size: 18px;
+        font-family: "Roboto Mono", monospace;
+        font-weight: 500;
+    
+        transition: all 0.2s;
+    }
+    
+    #qrBtn:hover{
+        border: 2px var(--accentColor) solid;
+        background-color: var(--accentColor);
+        cursor: pointer;
+    }
+
+    #qrOutput{
+        width: 74px;
+        height: 74px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #notesPage{
+        width: 100vw;
+        height: 100vh;
+
+        display:flex;
+
+        transform:translateY(0vh);
+
+        backdrop-filter: blur(4px);
+        background-color:rgba(0, 0, 0, 0.5);
+        z-index: 10;
+        position: absolute;
+    }
+    #notes{
+        width: 50vw;
+        height: 50vh;
+        border-radius: 0.5rem;
+
+        margin: auto;
+        color: var(--mainColor);
+        background-color: var(--altBgColor);
+        font-family: "Roboto Mono", monospace;
+        font-size: 1rem;
+        padding: 1vh;
+        z-index: 10;
+    }
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  /* Modal Content/Box */
+  .modal-content {
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+  }
+  

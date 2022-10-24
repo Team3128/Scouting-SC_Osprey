@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+    <html>
+    <link rel="icon" href="img/smileytexas.jpg">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title>eScouting_4.0</title>
+        <link href="style.css" rel="stylesheet" type="text/css" />
+        <link href="anim.css" rel="stylesheet" type="text/css" />
+
+        <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@100;200;300;400;500;600;700&family=Inter:wght@100;200;300;400;500;600;700&family=Roboto+Mono:wght@200;300;400;500&display=swap" rel="stylesheet">
+    </head>
+
+    <body id="body">
+
+        <div id="initPage" class="viewpage">
+            <div id="initContainer">
+                <div id="initHeader" class="header">eScouting</div>
+                <div class="line" id="initDivLine"></div>
+                <div id="initFormContainer" class="initFormContainer">
+                    <label for="initIdForm" class="initLabel">scout id ⮧</label>
+                    <input id="initIdForm" type="text" class="initForm" placeholder="name" autocomplete="off"></form>
+                    <label for="initNumberForm" class="initLabel">team number ⮧</label>
+                    <input id="initNumberForm" type="text" class="initForm" placeholder="3128" autocomplete="off"></form>
+                    <label for="initMatchForm" class="initLabel">match number ⮧</label>
+                    <input id="initMatchForm" type="text" class="initForm" placeholder="69" autocomplete="off"></form>
+                    <label for="initPositionForm" class="initLabel">team position⮧</label>
+                    <input id="initPositionForm" type="text" class="initForm" placeholder="1, 2, or 3" autocomplete="off"></form>
+
+                    <button id="initBtn">Continue</button>
+                    <div class="line" id="initDivLine"></div>
+                    <div id="myModal" class="modal">
+                        <div id="qrOutput" class="modal-content">
+                            <span class="close">&times;</span>
+                        </div>
+                    </div>
+                    <label for="initSearchForm" class="initLabel">Search Local Storage ⮧</label>
+                    <input id="initSearchForm" type="text" class="initForm" placeholder="Enter match #" autocomplete="off"></form>
+                    <button id="searchBtn">Search</button>
+                </div>
+                
+                <div id="standbyContainer" >
+                    <div id= "infoBar"></div>
+                    <canvas id="fieldCanvas"></canvas>
+                    <div id="standbyLabel">
+                        press <span class="hl-span">space</span> to continue
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div id="mainPage" class="viewpage mainPage">
+            <div id="displayBar">
+                <div id="display-match"></div>
+                <div id="display-timer"></div>
+                <div id="display-team"></div>
+            </div>
+        </div>
+
+        <div id="notesPage">
+            <textarea id="notes" placeholder = "Type your notes here ⮧ &#10Press [alt] to exit"></textarea>
+        </div>
+        <div id="notifPage"></div>
+        
+
+
+
+        <script src="settings.js"></script>
+        <script src = "qr.js"></script>
+        <script src="script.js"></script>
+
+        <script type="text/javascript">
+            var hook = true;
+            window.onbeforeunload = function() {
+              if (hook) {
+                return "You did a bonk donk but did you mean to do a bonk donk?"
+              }
+            }
+            function unhook() {
+              hook=false;
+            }
+        </script>
+
+        
+    </body>
+
+</html>
