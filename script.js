@@ -1,15 +1,44 @@
+//variable declarations
 let state = "init", matchNum, scoutNum, teamNum, teamPos, timer = 150, delay = true, rowContent = [], notesToggled = false, matchInfo = [], allianceColor = "n";
 
 let timeInt = 1000; // Time Interval, SHOULD BE 1000!!!!!!!
 let testing = false; // DISABLES INTRO PAGE CHECKS IF TRUE
 
 let startAudio = new Audio("sfx/start.wav")
+
+//import field image and draw on canvas for starting position
 var img = new Image(); 
 img.src = 'img/field.png';
 var canvas = document.getElementById('fieldCanvas');
 var ctx = canvas.getContext('2d');
 ctx.clearRect(0, 0, canvas.width, canvas.height);
 ctx.drawImage(img, 0, 0);
+document.getElementById("fieldCanvas").addEventListener("click", ()=>{
+    canvasClicked()
+})
+
+//canvas functions to get mouse position, translate to canvas position
+function getMousePos(canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+      x: (evt.clientX - rect.left) / (rect.right - rect.left) * canvas.width,
+      y: (evt.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height
+    };
+}
+function canvasClicked(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    canvas.width = img.width;
+    canvas.height = img.height;
+    ctx.drawImage(img, 0, 0);
+    var pos = getMousePos(canvas, event);
+    ctx.strokeStyle = "white";
+    ctx.fillStyle = "white";
+    ctx.beginPath();
+    ctx.arc(pos.x, pos.y, 5, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.stroke();
+    console.log("canvas clicked, x: " + Math.round(pos.x) + ", y: " + Math.round(pos.y));
+}
 
 window.onscroll = () => { window.scroll(0, 0); }; //stops scrolling, hacky bugfix
 
@@ -27,23 +56,17 @@ window.onclick = function(event) {
   }
 }
 
-document.getElementById("fieldCanvas").addEventListener("click", ()=>{
-    canvasClicked()
-})
+//transitions to 
 document.getElementById("initBtn").addEventListener("click", ()=>{
     transition(0);
 })
-document.getElementById("initHeader").addEventListener("click", ()=>{
-    switchColor()
-    console.log("color clicked")
-})
 
+//localStorage console commands
 function clearStorage() {
     console.log("CLEARING DATA");
     localStorage.clear()
     return;
 }
-
 function getStorage() {
     console.log("GETTING DATA")
     let allData = "";
@@ -55,13 +78,17 @@ function getStorage() {
     console.log(allData)
     return;
 }
-
 function setColor(col) {
     allianceColor = col;
     console.log("Alliance color set to: " + allianceColor)
     return;
 }
 
+//switches alliance color when TITLE is pressed on the main page
+document.getElementById("initHeader").addEventListener("click", ()=>{
+    switchColor()
+    console.log("color clicked")
+})
 function switchColor() {
     if (allianceColor == "b") {
         console.log("red")
@@ -74,7 +101,7 @@ function switchColor() {
     }
 }
 
-//search function
+//search function for localStorage
 document.getElementById("searchBtn").addEventListener("click", ()=>{
     searchTerm = document.getElementById("initSearchForm").value        
     value = localStorage.getItem(searchTerm)
@@ -105,6 +132,7 @@ document.getElementById("searchBtn").addEventListener("click", ()=>{
     modal.style.display = "block";
 })
 
+
 let keys = [];
 for(let i = 0; i < settings.auto.length; i++){
     keys.push(settings.auto[i].trigger);
@@ -115,10 +143,12 @@ for(let i=0; i<settings.tele.length; i++){
 let uniqueKeys = keys.filter((i, index) => {
     return keys.indexOf(i) === index;
 });
-let qrRefresh = setInterval(()=>{ if(state == "after") updateQr() }, 1000);
-window.addEventListener('keydown', function (keystroke) {
-    
 
+//updates QR code on qata page every second
+let qrRefresh = setInterval(()=>{ if(state == "after") updateQr() }, 1000);
+
+//code for hotkeys, notes
+window.addEventListener('keydown', function (keystroke) {
     if(keystroke.key == "Alt"){
         if(state == "init" || state == "after"){
             return;
@@ -153,21 +183,14 @@ window.addEventListener('keydown', function (keystroke) {
     if(notesToggled){
         return;
     }
-
     console.log(keystroke.key)
-
     if(state == "after"){
        updateQr();
     }
-
-
-
     if(keystroke.key == " " && state == "standby"){
         transition(1)
     }
-
     for(let i=0; i<uniqueKeys.length; i++){
-        
         if(state == "auto"){
             if(settings.auto[i].trigger == keystroke.key){
                 clickEvt(settings.auto[i].writeType, settings.auto[i].writeLoc);
@@ -187,33 +210,10 @@ window.addEventListener('keydown', function (keystroke) {
             }
         }
     }
-    
-    
 }
 )
 
-function getMousePos(canvas, evt) {
-    var rect = canvas.getBoundingClientRect();
-    return {
-      x: (evt.clientX - rect.left) / (rect.right - rect.left) * canvas.width,
-      y: (evt.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height
-    };
-}
-function canvasClicked(){
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    canvas.width = img.width;
-    canvas.height = img.height;
-    ctx.drawImage(img, 0, 0);
-    var pos = getMousePos(canvas, event);
-    ctx.strokeStyle = "white";
-    ctx.fillStyle = "white";
-    ctx.beginPath();
-    ctx.arc(pos.x, pos.y, 5, 0, 2 * Math.PI);
-    ctx.fill();
-    ctx.stroke();
-    console.log("canvas clicked, x: " + Math.round(pos.x) + ", y: " + Math.round(pos.y));
-}
-
+//reads settings.js file, generates HTML for the app using that info
 function generateMainPage(stage){
     document.getElementById("display-match").innerHTML = "Match:  " + matchNum;
     document.getElementById("display-team").innerHTML = "Team: " + teamNum;
@@ -415,7 +415,7 @@ function generateMainPage(stage){
             rowContent.push(settings.tele[i])
         }
         rowContent.push(tempFix[0])
-
+        
         console.log(rowContent.length)
         
 
@@ -515,57 +515,53 @@ function generateMainPage(stage){
 
     }
 }
+
+//defines time length, starts timer 
 function timerStart(i){
     timer = 150;
     delay = true;
     updateTimer();
-
     window.timerFunction = setInterval(updateTimer, timeInt)
-    
-    console.log("started")
+    console.log("timer started")
 }
 function updateTimer(){
     document.getElementById("display-timer").innerHTML = timer;
-
     if(settings.imported.transitionMode == "manual"){
         timer--;
     }
     if(settings.imported.transitionMode == "auto"){
-        if (timer == 135 && delay) {
+        if (timer == 135 && delay) { //janky implementation of 2 second auto to teleop delay
             timer = 136; //136??? check delay
             delay = !delay
-          }
-          if (timer == 135 && !delay) {
+        }
+        if (timer == 135 && !delay) {
             state = "tele"
             transition(2)
-          }
-          if(timer == 30){
+        }
+        if(timer == 30){
             //state = "end"
             //transition(3)
-          }
-          if(timer == 0) {
+            //this was removed because the endgame page was the same as the teleop page
+        }
+        if(timer == 0) {
             console.log("Game over");
             timer -= 1;
             state = "after";
             transition(4)
-          }
-          if (timer > 0) {
+        }
+        if (timer > 0) {
             timer --;
-          }
+        }
     }
     if(timer == 0) {
         console.log("Game over");
         timer -= 1;
         state = "after";
         transition(4)
-    }
-
-    
+    } 
 }
 
 function updateQr(){
-
-
     for(let i=0; i<dataValues.length; i++){
         if(i == 8){ //scrappy code, should change later   
         }
@@ -598,7 +594,6 @@ function updateQr(){
     qr.make();
     document.getElementById('qrContainer').innerHTML = qr.createImgTag();
     document.getElementById("qrText").innerHTML = matchInfo.concat(dataValues);
-
 }
 
 let incArr = []
