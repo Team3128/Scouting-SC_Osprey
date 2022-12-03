@@ -1,5 +1,5 @@
 class dataStructure {
-
+//                0         1         2           3         4          5            6           7              8            9           10             11                 12              13            14              15         16          17        18       
     dataValues = [0       , 0       , ""        , ""      , false    , 0          , 0         , 0            , 0          , 0         , 0            , false            , 0             , 0           , 0             , false    , 0         , ""      , ""];
     dataLabels = ["Match" , "Team"  , "Position", "Scout" , "Taxi"   , "Auto High", "Auto Low", "Auto Missed", "Tele High", "Tele Low", "Tele Missed", "Attempted Climb", "Climb Points", "Climb Time", "Defense Time", "Penalty", "Oof Time", "Yeet"  , "QATA"];
     dataTypes  = ["number", "number", "string"  , "string", "boolean", "number"   , "number"  , "number"     , "number"   , "number"  , "number"     , "boolean"        , "number"      , "number"    , "number"      , "boolean", "number"  , "string", "string"];

@@ -10,7 +10,7 @@ let settings = {
       "columnEnd": 3,
       "rowStart": 1,
       "rowEnd": 3,
-      "writeLoc": 1,
+      "writeLoc": 5,
       "writeType": "int"
     },
     {
@@ -20,7 +20,7 @@ let settings = {
       "columnEnd": 5,
       "rowStart": 1,
       "rowEnd": 3,
-      "writeLoc": 2,
+      "writeLoc": 6,
       "writeType": "int"
     }, 
     {
@@ -30,7 +30,7 @@ let settings = {
       "columnEnd": 3,
       "rowStart": 3,
       "rowEnd": 5,
-      "writeLoc": 3,
+      "writeLoc": 7,
       "writeType": "int"
     }, 
     {
@@ -40,14 +40,10 @@ let settings = {
       "columnEnd": 5,
       "rowStart": 3,
       "rowEnd": 5,
-      "writeLoc": 0,
+      "writeLoc": 4,
       "writeType": "bool"
     }
   ],
-
-
-
-
 
   "tele":[
     {
@@ -57,7 +53,7 @@ let settings = {
       "columnEnd": 3,
       "rowStart": 1,
       "rowEnd": 3,
-      "writeLoc": 4,
+      "writeLoc": 8,
       "writeType": "int"
     },
     {
@@ -67,7 +63,7 @@ let settings = {
       "columnEnd": 5,
       "rowStart": 1,
       "rowEnd": 3,
-      "writeLoc": 5,
+      "writeLoc": 9,
       "writeType": "int"
     }, 
     {
@@ -77,7 +73,7 @@ let settings = {
       "columnEnd": 3,
       "rowStart": 3,
       "rowEnd": 5,
-      "writeLoc": 6,
+      "writeLoc": 10,
       "writeType": "int"
     }, 
     {
@@ -87,59 +83,52 @@ let settings = {
       "columnEnd": 5,
       "rowStart": 3,
       "rowEnd": 4,
-      "writeLoc": 10,
+      "writeLoc": 14,
       "writeType": "inc"
     },
     {
       "label": "Climb Timer",
       "trigger": "l", 
       "columnStart": 3,
+      "columnEnd": 4,
+      "rowStart": 4,
+      "rowEnd": 5,
+      "writeLoc": 13,
+      "writeType": "inc"
+    },
+    {
+      "label":"Oof Timer", 
+      "trigger": ";", 
+      "columnStart": 4,
       "columnEnd": 5,
       "rowStart": 4,
       "rowEnd": 5,
-      "writeLoc": 9,
+      "writeLoc": 16,
       "writeType": "inc"
     }
   ], 
   "after":[
     {
       "label":"Climb Level",
-      "writeLoc": 8,
+      "writeLoc": 12,
       "writeType": "cyc",
       "cycOptions": ["N","L", "M", "H", "T"],
       "writeCycOptions": 5
     },
     {
       "label":"Penalty",
-      "writeLoc": 11,
+      "writeLoc": 15,
       "writeType": "bool",
     }, 
     {
-      "label":"Oof", 
-      "writeLoc": 13,
-      "writeType": "bool"
-    },
-    {
-      "label": "Drive Train",
-      "writeLoc": 15,
-      "writeType": "str",
-      "placeholder": "e.g. tank, swerve"
-    },
-    {
       "label": "Shooting Distance",
-      "writeLoc": 12,
+      "writeLoc": 17,
       "writeType": "str",
       "placeholder": "e.g. tarmac, bumper"
     },
     {
-      "label": "Shooter", 
-      "writeLoc": 16, 
-      "writeType": "str",
-      "placeholder": "e.g. hood, turret, other"
-    },
-    {
       "label": "Other Qata",
-      "writeLoc": 14,
+      "writeLoc": 18,
       "writeType": "str",
       "placeholder": "e.g. defence, penalties, speed"
     }
@@ -148,11 +137,16 @@ let settings = {
   
 }
 
-let dataValues = [false, 0, 0, 0, 0, 0, 0, false, null, 0, 0, false, "", false, "", "", ""];
-let dataLabels = ["Taxi", "Auto High", "Auto Low", "Auto Missed", "Tele High", "Tele Low", "Tele Missed", "Attempted Climb", "Climb Level", "Climb Time", "Defence Time", "Penalty", "Yeet", "Oof", "QATA", "Drivetrain Type", "Shooter Type"];
+//let dataValues = [false, 0, 0, 0, 0, 0, 0, false, null, 0, 0, false, "", false, "", "", ""];
+//let dataLabels = ["Taxi", "Auto High", "Auto Low", "Auto Missed", "Tele High", "Tele Low", "Tele Missed", "Attempted Climb", "Climb Level", "Climb Time", "Defence Time", "Penalty", "Yeet", "Oof", "QATA", "Drivetrain Type", "Shooter Type"];
 
-let tempFix = [{
-  "label": "Attempted Climb",
-  "writeLoc": 7,
-  "writeType": "bool"
-}]
+data = new dataStructure();
+let dataValues = data.getDataValues();
+let dataLabels = data.getDataLabels();
+
+
+// let tempFix = [{
+//   "label": "Attempted Climb",
+//   "writeLoc": 7,
+//   "writeType": "bool"
+// }]
