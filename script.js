@@ -2,88 +2,23 @@
 let state = "init", matchNum, scoutNum, teamNum, teamPos, timer = 150, delay = true, rowContent = [], notesToggled = false, matchInfo = [], allianceColor = "n";
 
 let timeInt = 1000; // Time Interval, SHOULD BE 1000!!!!!!!
-let testing = true; // DISABLES INTRO PAGE CHECKS IF TRUE
+let testing = false; // DISABLES INTRO PAGE CHECKS IF TRUE
 
 let startAudio = new Audio("sfx/start.wav")
 
-//import field image and draw on canvas for starting position
-var img = new Image(); 
-img.src = 'img/field.png';
-var canvas = document.getElementById('fieldCanvas');
-var ctx = canvas.getContext('2d');
-ctx.clearRect(0, 0, canvas.width, canvas.height);
-ctx.drawImage(img, 0, 0);
-document.getElementById("fieldCanvas").addEventListener("click", ()=>{
-    canvasClicked()
-})
-
-//canvas functions to get mouse position, translate to canvas position
-function getMousePos(canvas, evt) {
-    var rect = canvas.getBoundingClientRect();
-    return {
-      x: (evt.clientX - rect.left) / (rect.right - rect.left) * canvas.width,
-      y: (evt.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height
-    };
-}
-function canvasClicked(){
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    canvas.width = img.width;
-    canvas.height = img.height;
-    ctx.drawImage(img, 0, 0);
-    var pos = getMousePos(canvas, event);
-    ctx.strokeStyle = "white";
-    ctx.fillStyle = "white";
-    ctx.beginPath();
-    ctx.arc(pos.x, pos.y, 5, 0, 2 * Math.PI);
-    ctx.fill();
-    ctx.stroke();
-    console.log("canvas clicked, x: " + Math.round(pos.x) + ", y: " + Math.round(pos.y));
-}
-
 window.onscroll = () => { window.scroll(0, 0); }; //stops scrolling, hacky bugfix
-
-//code for search qr popup
-var modal = document.getElementById("myModal");
-var btn = document.getElementById("searchBtn");
-var span = document.getElementsByClassName("close")[0];
-// When the user clicks on <span> (x) or clicks anywhere outside of the modal, close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-}
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
 
 //transitions to 
 document.getElementById("initBtn").addEventListener("click", ()=>{
     transition(0);
 })
 
-//localStorage console commands
-function clearStorage() {
-    console.log("CLEARING DATA");
-    localStorage.clear()
-    return;
-}
-function getStorage() {
-    console.log("GETTING DATA")
-    let allData = "";
-    for(var i in localStorage) {
-        if (typeof localStorage[i] == "string") {
-            allData += localStorage[i] + "\n"
-        }
-    }
-    console.log(allData)
-    return;
-}
+
 function setColor(col) {
     allianceColor = col;
     console.log("Alliance color set to: " + allianceColor)
     return;
 }
-
 //switches alliance color when TITLE is pressed on the main page
 document.getElementById("initHeader").addEventListener("click", ()=>{
     switchColor()
@@ -103,46 +38,12 @@ function switchColor() {
 
 //search function for localStorage
 document.getElementById("searchBtn").addEventListener("click", ()=>{
-    searchTerm = document.getElementById("initSearchForm").value        
-    value = localStorage.getItem(searchTerm)
-    if (value == null || searchTerm == null || searchTerm == '') {
-        document.getElementById('qrOutput').innerHTML = "";
-        console.log("No data found")
-        return
-    }
-
-    console.log("Search term: " + searchTerm)
-    console.log("Data: " + value)
-
-    var typeNumber = 0;
-    var errorCorrectionLevel = 'L';
-    var qr = qrcode(typeNumber, errorCorrectionLevel);
-    qr.addData(value);
-    qr.make();
-    /*
-    var mod = qr.getModuleCount();
-    var length = 8 + 2 * mod
-    document.getElementById('qrOutput').style.width = length;
-    document.getElementById('qrOutput').style.height = length;
-    */
-
-    document.getElementById('qrOutput').innerHTML = qr.createImgTag();
-    console.log("Data found for match " + searchTerm + ": ");
-    console.log(value);
+    searchStorage(document.getElementById("initSearchForm").value)
     modal.style.display = "block";
 })
 
 
-let keys = [];
-for(let i = 0; i < settings.auto.length; i++){
-    keys.push(settings.auto[i].trigger);
-}
-for(let i=0; i<settings.tele.length; i++){
-    keys.push(settings.tele[i].trigger);
-}
-let uniqueKeys = keys.filter((i, index) => {
-    return keys.indexOf(i) === index;
-});
+
 
 //updates QR code on qata page every second
 let qrRefresh = setInterval(()=>{ if(state == "after") updateQr() }, 1000);
@@ -867,14 +768,3 @@ function resetGame(){
     document.getElementById("mainPage").classList.remove("afterPageContainer");
     document.getElementById("mainPage").classList.add("mainPage");
 }
-
-//buffers for phase switching
-//manual vs auto phase switching
-//hour logging?
-//till next break>??
-//custom keybinds
-//custom colour themes
-//custom sounds but its already implemented :shrug:
-
-
-
