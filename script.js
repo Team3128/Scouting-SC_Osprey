@@ -2,7 +2,7 @@
 let state = "init", matchNum, scoutNum, teamNum, teamPos, timer = 150, delay = true, rowContent = [], notesToggled = false, matchInfo = [], allianceColor = "n";
 
 let timeInt = 1000; // Time Interval, SHOULD BE 1000!!!!!!!
-let testing = false; // DISABLES INTRO PAGE CHECKS IF TRUE
+let testing = true; // DISABLES INTRO PAGE CHECKS IF TRUE
 
 let startAudio = new Audio("sfx/start.wav")
 
@@ -91,26 +91,26 @@ window.addEventListener('keydown', function (keystroke) {
     if(keystroke.key == " " && state == "standby"){
         transition(1)
     }
-    for(let i=0; i<uniqueKeys.length; i++){
-        if(state == "auto"){
-            if(settings.auto[i].trigger == keystroke.key){
-                clickEvt(settings.auto[i].writeType, settings.auto[i].writeLoc);
-            }
-            if(settings.auto[i].trigger.toUpperCase() == keystroke.key){
-                clickEvt(settings.auto[i].writeType, settings.auto[i].writeLoc, true);
-                console.log("reverse")
-            }
-        }
-        if(state == "tele"){
-            if(settings.tele[i].trigger == keystroke.key){
-                clickEvt(settings.tele[i].writeType, settings.tele[i].writeLoc);
-            }
-            if(settings.tele[i].trigger.toUpperCase() == keystroke.key){
-                clickEvt(settings.tele[i].writeType, settings.tele[i].writeLoc, true);
-                console.log("reverse")
-            }
-        }
-    }
+    // for(let i=0; i<uniqueKeys.length; i++){
+    //     if(state == "auto"){
+    //         if(settings.auto[i].trigger == keystroke.key){
+    //             clickEvt(settings.auto[i].writeType, settings.auto[i].writeLoc);
+    //         }
+    //         if(settings.auto[i].trigger.toUpperCase() == keystroke.key){
+    //             clickEvt(settings.auto[i].writeType, settings.auto[i].writeLoc, true);
+    //             console.log("reverse")
+    //         }
+    //     }
+    //     if(state == "tele"){
+    //         if(settings.tele[i].trigger == keystroke.key){
+    //             clickEvt(settings.tele[i].writeType, settings.tele[i].writeLoc);
+    //         }
+    //         if(settings.tele[i].trigger.toUpperCase() == keystroke.key){
+    //             clickEvt(settings.tele[i].writeType, settings.tele[i].writeLoc, true);
+    //             console.log("reverse")
+    //         }
+    //     }
+    // }
 }
 )
 
@@ -120,69 +120,61 @@ function generateMainPage(stage){
     document.getElementById("display-team").innerHTML = "Team: " + teamNum;
     if(stage == "auto"){
         for(i=0; i<settings.auto.length; i++){
-            const box = document.createElement("div")
-            box.innerHTML = settings.auto[i].label;
-            box.classList.add("mainPageBox");
-            box.style.gridColumnStart = settings.auto[i].columnStart;
-            box.style.gridColumnEnd = settings.auto[i].columnEnd;
-            box.style.gridRowStart = settings.auto[i].rowStart;
-            box.style.gridRowEnd = settings.auto[i].rowEnd;
-            let wType = settings.auto[i].writeType;
-            let wLoc = settings.auto[i].writeLoc;
-            box.id = "box" + wLoc
-            box.addEventListener("click", ()=>clickEvt(wType, wLoc))
-            document.getElementById("mainPage").appendChild(box);
-
-            const boxLabel = document.createElement("div");
-            boxLabel.classList.add("mainPageLabel");
-            boxLabel.style.gridColumn = (settings.auto[i].columnEnd-1) + "/" + (settings.auto[i].columnEnd-1);
-            boxLabel.style.gridRow = (settings.auto[i].rowEnd-1) + "/" + (settings.auto[i].rowEnd-1);
-            boxLabel.innerHTML = settings.auto[i].trigger.toUpperCase()
-            boxLabel.addEventListener("click", ()=>clickEvt(wType, wLoc))
-            document.getElementById("mainPage").appendChild(boxLabel);
-
-            const boxCount = document.createElement("div");
-            boxCount.classList.add("mainPageCounter");
-            boxCount.id = "label" + wLoc;
-            boxCount.innerHTML = dataValues[wLoc];
-            boxCount.style.gridColumn = settings.auto[i].columnStart + "/" + settings.auto[i].columnStart;
-            boxCount.style.gridRow = (settings.auto[i].rowEnd-1) + "/" + (settings.auto[i].rowEnd-1);
-            boxCount.addEventListener("click", ()=>clickEvt(wType, wLoc))
-            document.getElementById("mainPage").appendChild(boxCount);
-            
+            autoButton = new ModularButton(
+                settings.auto[i].label, 
+                settings.auto[i].trigger, 
+                settings.auto[i].columnStart, 
+                settings.auto[i].columnEnd,
+                settings.auto[i].rowStart,
+                settings.auto[i].rowEnd,
+                settings.auto[i].writeLoc,
+                settings.auto[i].writeType
+            );
         }
     }
     if(stage == "tele"){
         for(i=0; i<settings.tele.length; i++){
-            const box = document.createElement("div")
-            box.innerHTML = settings.tele[i].label;
-            box.classList.add("mainPageBox");
-            box.style.gridColumnStart = settings.tele[i].columnStart;
-            box.style.gridColumnEnd = settings.tele[i].columnEnd;
-            box.style.gridRowStart = settings.tele[i].rowStart;
-            box.style.gridRowEnd = settings.tele[i].rowEnd;
-            let wType = settings.tele[i].writeType;
-            let wLoc = settings.tele[i].writeLoc;
-            box.id = "box" + wLoc
-            box.addEventListener("click", ()=>clickEvt(wType, wLoc))
-            document.getElementById("mainPage").appendChild(box);
+            teleButton = new ModularButton(
+                settings.tele[i].label, 
+                settings.tele[i].trigger, 
+                settings.tele[i].columnStart, 
+                settings.tele[i].columnEnd,
+                settings.tele[i].rowStart,
+                settings.tele[i].rowEnd,
+                settings.tele[i].writeLoc,
+                settings.tele[i].writeType
+            );
 
-            const boxLabel = document.createElement("div");
-            boxLabel.classList.add("mainPageLabel");
-            boxLabel.style.gridColumn = (settings.tele[i].columnEnd-1) + "/" + (settings.tele[i].columnEnd-1);
-            boxLabel.style.gridRow = (settings.tele[i].rowEnd-1) + "/" + (settings.tele[i].rowEnd-1);
-            boxLabel.innerHTML = settings.tele[i].trigger.toUpperCase()
-            boxLabel.addEventListener("click", ()=>clickEvt(wType, wLoc))
-            document.getElementById("mainPage").appendChild(boxLabel);
 
-            const boxCount = document.createElement("div");
-            boxCount.classList.add("mainPageCounter");
-            boxCount.id = "label" + wLoc;
-            boxCount.innerHTML = dataValues[wLoc];
-            boxCount.style.gridColumn = settings.tele[i].columnStart + "/" + settings.tele[i].columnStart;
-            boxCount.style.gridRow = (settings.tele[i].rowEnd-1) + "/" + (settings.tele[i].rowEnd-1);
-            boxCount.addEventListener("click", ()=>clickEvt(wType, wLoc))
-            document.getElementById("mainPage").appendChild(boxCount);
+            // const box = document.createElement("div")
+            // box.innerHTML = settings.tele[i].label;
+            // box.classList.add("mainPageBox");
+            // box.style.gridColumnStart = settings.tele[i].columnStart;
+            // box.style.gridColumnEnd = settings.tele[i].columnEnd;
+            // box.style.gridRowStart = settings.tele[i].rowStart;
+            // box.style.gridRowEnd = settings.tele[i].rowEnd;
+            // let wType = settings.tele[i].writeType;
+            // let wLoc = settings.tele[i].writeLoc;
+            // box.id = "box" + wLoc
+            // box.addEventListener("click", ()=>clickEvt(wType, wLoc))
+            // document.getElementById("mainPage").appendChild(box);
+
+            // const boxLabel = document.createElement("div");
+            // boxLabel.classList.add("mainPageLabel");
+            // boxLabel.style.gridColumn = (settings.tele[i].columnEnd-1) + "/" + (settings.tele[i].columnEnd-1);
+            // boxLabel.style.gridRow = (settings.tele[i].rowEnd-1) + "/" + (settings.tele[i].rowEnd-1);
+            // boxLabel.innerHTML = settings.tele[i].trigger.toUpperCase()
+            // boxLabel.addEventListener("click", ()=>clickEvt(wType, wLoc))
+            // document.getElementById("mainPage").appendChild(boxLabel);
+
+            // const boxCount = document.createElement("div");
+            // boxCount.classList.add("mainPageCounter");
+            // boxCount.id = "label" + wLoc;
+            // boxCount.innerHTML = dataValues[wLoc];
+            // boxCount.style.gridColumn = settings.tele[i].columnStart + "/" + settings.tele[i].columnStart;
+            // boxCount.style.gridRow = (settings.tele[i].rowEnd-1) + "/" + (settings.tele[i].rowEnd-1);
+            // boxCount.addEventListener("click", ()=>clickEvt(wType, wLoc))
+            // document.getElementById("mainPage").appendChild(boxCount);
         }
         console.log("tele generated");
     }
@@ -617,16 +609,16 @@ function clickEvt(type, loc, rev = null){
     console.log(dataValues);
 }
 
-//def and climb timers
-setInterval( ()=>{
-    if((state == "after") || (state=="init")){
-        return;
-    }
-    for(let i=0; i<incArr.length; i++){
-        dataValues[incArr[i]]++
-        document.getElementById("label" + incArr[i]).innerHTML = dataValues[incArr[i]];
-    }
-}, 1000)
+// //def and climb timers
+// setInterval( ()=>{
+//     if((state == "after") || (state=="init")){
+//         return;
+//     }
+//     for(let i=0; i<incArr.length; i++){
+//         dataValues[incArr[i]]++
+//         document.getElementById("label" + incArr[i]).innerHTML = dataValues[incArr[i]];
+//     }
+// }, 1000)
 
 function transition(i){
     if(i==0 && state == "init"){

@@ -44,4 +44,8 @@ class dataStructure {
 
     }
 
+    createPage() {
+        
+    }
+
 }
