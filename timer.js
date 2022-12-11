@@ -1,12 +1,12 @@
 class Timer {
     constructor() {
-      this.startTime = null;
+      this.counting = false;
       this.timerInterval = null;
       this.elapsedTime = 0;
     }
   
     start() {
-      this.startTime = Date.now();
+      this.counting = true;
       this.timerInterval = setInterval(() => {
         this.elapsedTime++;
       }, 1000);
@@ -14,16 +14,16 @@ class Timer {
   
     pause() {
       clearInterval(this.timerInterval);
-      this.startTime = null;
+      this.counting = false;
     }
   
     toggle() {
-      if (this.startTime === null) {
-        this.start();
-      } else {
-        this.pause();
-      }
+      this.counting ? this.pause() : this.start();
       return this.elapsedTime;
+    }
+
+    update(element) {
+      element.innerHTML = this.elapsedTime;
     }
 
     getValue() {
@@ -31,6 +31,6 @@ class Timer {
     }
 
     getState() {
-      return !(this.startTime === null);
+      return (this.counting);
     }
   }

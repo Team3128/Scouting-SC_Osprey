@@ -131,6 +131,7 @@ function generateMainPage(stage){
                 settings.auto[i].writeType
             );
         }
+        console.log("auto generated");
     }
     if(stage == "tele"){
         for(i=0; i<settings.tele.length; i++){
@@ -144,37 +145,6 @@ function generateMainPage(stage){
                 settings.tele[i].writeLoc,
                 settings.tele[i].writeType
             );
-
-
-            // const box = document.createElement("div")
-            // box.innerHTML = settings.tele[i].label;
-            // box.classList.add("mainPageBox");
-            // box.style.gridColumnStart = settings.tele[i].columnStart;
-            // box.style.gridColumnEnd = settings.tele[i].columnEnd;
-            // box.style.gridRowStart = settings.tele[i].rowStart;
-            // box.style.gridRowEnd = settings.tele[i].rowEnd;
-            // let wType = settings.tele[i].writeType;
-            // let wLoc = settings.tele[i].writeLoc;
-            // box.id = "box" + wLoc
-            // box.addEventListener("click", ()=>clickEvt(wType, wLoc))
-            // document.getElementById("mainPage").appendChild(box);
-
-            // const boxLabel = document.createElement("div");
-            // boxLabel.classList.add("mainPageLabel");
-            // boxLabel.style.gridColumn = (settings.tele[i].columnEnd-1) + "/" + (settings.tele[i].columnEnd-1);
-            // boxLabel.style.gridRow = (settings.tele[i].rowEnd-1) + "/" + (settings.tele[i].rowEnd-1);
-            // boxLabel.innerHTML = settings.tele[i].trigger.toUpperCase()
-            // boxLabel.addEventListener("click", ()=>clickEvt(wType, wLoc))
-            // document.getElementById("mainPage").appendChild(boxLabel);
-
-            // const boxCount = document.createElement("div");
-            // boxCount.classList.add("mainPageCounter");
-            // boxCount.id = "label" + wLoc;
-            // boxCount.innerHTML = dataValues[wLoc];
-            // boxCount.style.gridColumn = settings.tele[i].columnStart + "/" + settings.tele[i].columnStart;
-            // boxCount.style.gridRow = (settings.tele[i].rowEnd-1) + "/" + (settings.tele[i].rowEnd-1);
-            // boxCount.addEventListener("click", ()=>clickEvt(wType, wLoc))
-            // document.getElementById("mainPage").appendChild(boxCount);
         }
         console.log("tele generated");
     }
