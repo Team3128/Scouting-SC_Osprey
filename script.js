@@ -8,12 +8,10 @@ let startAudio = new Audio("sfx/start.wav")
 
 window.onscroll = () => { window.scroll(0, 0); }; //stops scrolling, hacky bugfix
 
-//transitions to 
+//transitions to standby page
 document.getElementById("initBtn").addEventListener("click", ()=>{
     transition(0);
 })
-
-
 function setColor(col) {
     allianceColor = col;
     console.log("Alliance color set to: " + allianceColor)
@@ -35,15 +33,6 @@ function switchColor() {
         document.getElementById("initHeader").style.color = "var(--b)";
     }
 }
-
-//search function for localStorage
-document.getElementById("searchBtn").addEventListener("click", ()=>{
-    searchStorage(document.getElementById("initSearchForm").value)
-    modal.style.display = "block";
-})
-
-
-
 
 //updates QR code on qata page every second
 let qrRefresh = setInterval(()=>{ if(state == "after") updateQr() }, 1000);
@@ -119,6 +108,7 @@ function generateMainPage(stage){
     document.getElementById("display-match").innerHTML = "Match:  " + matchNum;
     document.getElementById("display-team").innerHTML = "Team: " + teamNum;
     if(stage == "auto"){
+        autoButtons = [];
         for(i=0; i<settings.auto.length; i++){
             autoButton = new ModularButton(
                 settings.auto[i].label, 
@@ -130,10 +120,19 @@ function generateMainPage(stage){
                 settings.auto[i].writeLoc,
                 settings.auto[i].writeType
             );
+            autoButtons.push(autoButton)
         }
         console.log("auto generated");
+        console.log(autoButtons)
     }
     if(stage == "tele"){
+        autoButtons.forEach(function(element) {
+            dataValues.push(element.getValue());
+            element.disable();
+        });
+        console.log(dataValues);
+
+        teleButtons = [];
         for(i=0; i<settings.tele.length; i++){
             teleButton = new ModularButton(
                 settings.tele[i].label, 
@@ -145,10 +144,17 @@ function generateMainPage(stage){
                 settings.tele[i].writeLoc,
                 settings.tele[i].writeType
             );
+            teleButtons.push(teleButton)
         }
         console.log("tele generated");
+        console.log(teleButtons);
     }
     if(stage == "after"){
+        teleButtons.forEach(function(element) {
+            dataValues.push(element.getValue());
+            element.disable();
+        });
+        console.log(dataValues);
         document.getElementById("displayBar").style.display = "none"
 
         //close notes box if it is open
@@ -259,7 +265,6 @@ function generateMainPage(stage){
             }
             
         }
-
 
         let editBox = document.createElement("div");
         editBox.classList.add("afterPageEdit");

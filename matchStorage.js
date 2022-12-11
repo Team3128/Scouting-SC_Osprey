@@ -2,6 +2,7 @@
 var modal = document.getElementById("myModal");
 var btn = document.getElementById("searchBtn");
 var span = document.getElementsByClassName("close")[0];
+
 // When the user clicks on <span> (x) or clicks anywhere outside of the modal, close the modal
 span.onclick = function() {
   modal.style.display = "none";
@@ -11,6 +12,10 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
+//search function for localStorage
+document.getElementById("searchBtn").addEventListener("click", ()=>{
+    searchStorage(document.getElementById("initSearchForm").value)
+})
 
 //localStorage console commands
 function clearStorage() {
@@ -36,7 +41,6 @@ function searchStorage(searchTerm) {
         document.getElementById('qrOutput').innerHTML = "";
         console.log("No data found")
     }
-
     console.log("Search term: " + searchTerm)
     console.log("Data: " + value)
 
@@ -55,5 +59,7 @@ function searchStorage(searchTerm) {
     document.getElementById('qrOutput').innerHTML = qr.createImgTag();
     console.log("Data found for match " + searchTerm + ": ");
     console.log(value);
+
+    modal.style.display = "block";
 }
     

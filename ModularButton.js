@@ -44,6 +44,7 @@ class ModularButton {
         this.boxLabel.addEventListener('click', this.onTrigger);
         this.boxCount.addEventListener('click', this.onTrigger);
 
+        //if the button type is a timer, create a timer object
         if (writeType == "inc") {
             this.timer = new Timer();
             setInterval(() => {
@@ -88,6 +89,12 @@ class ModularButton {
         }
     }
 
-    
+    disable() {
+        this.hotkey = null;
+    }
+
+    getValue() {
+        return this.data;
+    }
 
 }
